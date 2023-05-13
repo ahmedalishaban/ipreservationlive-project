@@ -1,4 +1,4 @@
-package AdminTest.Dashboard;
+package AdminTest.Dashboard.Tests;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.*;
@@ -18,7 +18,7 @@ public class TC01_login {
     WebDriver driver;
     SoftAssert softAssert = new SoftAssert();
     //Set up the driver and navigate to the login page
-    @Parameters({"URL"})
+    @Parameters({"loginURL"})
     @BeforeClass
     public void setUp(String url) {
         WebDriverManager.edgedriver().setup();
@@ -41,7 +41,7 @@ public class TC01_login {
         //Verify successful login message is displayed
         WebElement actualMessage = driver.findElement(By.xpath("//span[text()= ' Welcome back check']"));
         Assert.assertTrue(actualMessage.isDisplayed(),"The message doesn't displayed successfully");
-        //Click on a button to logout
+        //Click on a button to close the message
         driver.findElement(By.xpath("(//button[@type=\"button\"])[3]")).click();
     }
 

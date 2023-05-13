@@ -8,7 +8,7 @@
         </run>
     </groups>
     <classes>
-        <class name="AdminTest.Dashboard.TC01_login">
+        <class name="AdminTest.Dashboard.Tests.TC01_login">
         </class>
     </classes>
 </test>

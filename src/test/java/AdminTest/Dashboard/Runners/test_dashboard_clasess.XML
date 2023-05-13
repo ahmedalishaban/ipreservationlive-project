@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Testing Login and Dashboard">
+    <parameter name="loginURL" value="https://testui.ipreservationlive.com/admin/login"/>
+    <parameter name="username" value="check123"/>
+    <parameter name="password" value="helloworld"/>
+
+    <test name="Login with Valid username and password">
+        <classes>
+            <class name="AdminTest.Dashboard.Tests.TC01_login"/>
+        </classes>
+    </test>
+
+    <test name="Dashboard">
+        <classes>
+            <class name="AdminTest.Dashboard.Tests.TC02_dashboard">
+                <methods>
+                    <include name="verifyNavigateIcon"/>
+                    <include name="verifyStatus"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+</suite>
