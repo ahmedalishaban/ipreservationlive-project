@@ -1,16 +1,16 @@
 package AdminTest.Dashboard;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.io.FileHandler;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
+import org.testng.ITestResult;
+import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
+
+import java.io.File;
+import java.io.IOException;
 
 public class TC01_login {
 
@@ -45,7 +45,20 @@ public class TC01_login {
         driver.findElement(By.xpath("(//button[@type=\"button\"])[3]")).click();
     }
 
-
+    @AfterMethod
+    public void takeFailedScreenShots(ITestResult testResult){
+        if (ITestResult.FAILURE == testResult.getStatus()) {
+            TakesScreenshot screenshot = (TakesScreenshot) driver;
+            File source = screenshot.getScreenshotAs(OutputType.FILE);
+            File destination = new File(System.getProperty("user.dir") +
+                    "/resources/screenshots/" + testResult.getName() + ".png");
+            try {
+                FileHandler.copy(source,destination);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     //Close the browser window
     @AfterClass
