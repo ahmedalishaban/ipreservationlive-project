@@ -1,4 +1,4 @@
-package AdminTest.Dashboard.Tests;
+package AdminTest.Dashboard;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.*;

@@ -7,16 +7,17 @@
 
     <test name="Login with Valid username and password">
         <classes>
-            <class name="AdminTest.Dashboard.Tests.TC01_login"/>
+            <class name="AdminTest.Dashboard.TC01_login"/>
         </classes>
     </test>
 
     <test name="Dashboard">
         <classes>
-            <class name="AdminTest.Dashboard.Tests.TC02_dashboard">
+            <class name="AdminTest.Dashboard.TC02_dashboard">
                 <methods>
                     <include name="verifyNavigateIcon"/>
                     <include name="verifyStatus"/>
+                    <include name="verifyClient"/>
                 </methods>
             </class>
         </classes>
