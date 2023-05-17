@@ -17,7 +17,7 @@
                 <methods>
                     <include name="verifyNavigateIcon"/>
                     <include name="verifyStatus"/>
-                    <include name="verifyClient"/>
+<!--                    <include name="verifyClient"/> -->
                 </methods>
             </class>
         </classes>

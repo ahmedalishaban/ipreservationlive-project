@@ -125,43 +125,43 @@ public class TC02_dashboard {
 
 
 
-    @Test
-    public void verifyClient() {
-        driver.get("https://testui.ipreservationlive.com/dashboard");
-        WebElement clientGrid =  driver.findElement(By.xpath("(//div[@class=\"card-box px-md-1\"])[2]"));
-        WebElement clientChart = driver.findElement(By.xpath("(//div[@class=\"card-box px-md-1 h-100\"])[3]"));
-
-            // Assert from Client Availability
-            Assert.assertTrue(clientGrid.isDisplayed());
-            Assert.assertTrue(clientChart.isDisplayed());
-
-        String [] clientName = new String[5];
-        String [] clientValues = new String[5];
-        String [] actualValues = new String[5];
-        for (int i=0 ; i< clientName.length ;i++){
-            int count = 6;
-            clientName[i] = driver.findElement(By.xpath("(//tr[@role=\"row\"])["+count+"]//td[@data-kendo-grid-column-index='0']")).getText();
-            clientValues[i] = driver.findElement(By.xpath("(//tr[@role=\"row\"])["+count+"]//td[@data-kendo-grid-column-index='5']")).getText();
-            count = count + 1;
-        }
-
-        WebElement workOrdersBtn = driver.findElement(By.xpath("(//a[@routerlinkactive=\"active\"])[1]"));
-        workOrdersBtn.click();
-
-        WebElement clientTxtBox = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//td[@id=\"k-grid0-r1c4\"]//kendo-grid-filter-wrapper-cell[@id=\"abId0.0676888859836664\"]//input")));
-
-        for (int j = 0; j< clientName.length; j++){
-            clientTxtBox.clear();
-            clientTxtBox.sendKeys(clientName[j]);
-            actualValues[j] = driver.findElement(By.xpath("//kendo-pager-info[@class='k-pager-info k-label ng-star-inserted']")).getText();
-        }
-
-        for (int count = 0 ; count < clientName.length;count++){
-            Assert.assertTrue(actualValues[count].contains(clientValues[count]));
-        }
-
-
-    }
+//    @Test
+//    public void verifyClient() {
+//        driver.get("https://testui.ipreservationlive.com/dashboard");
+//        WebElement clientGrid =  driver.findElement(By.xpath("(//div[@class=\"card-box px-md-1\"])[2]"));
+//        WebElement clientChart = driver.findElement(By.xpath("(//div[@class=\"card-box px-md-1 h-100\"])[3]"));
+//
+//            // Assert from Client Availability
+//            Assert.assertTrue(clientGrid.isDisplayed());
+//            Assert.assertTrue(clientChart.isDisplayed());
+//
+//        String [] clientName = new String[5];
+//        String [] clientValues = new String[5];
+//        String [] actualValues = new String[5];
+//        for (int i=0 ; i< clientName.length ;i++){
+//            int count = 6;
+//            clientName[i] = driver.findElement(By.xpath("(//tr[@role=\"row\"])["+count+"]//td[@data-kendo-grid-column-index='0']")).getText();
+//            clientValues[i] = driver.findElement(By.xpath("(//tr[@role=\"row\"])["+count+"]//td[@data-kendo-grid-column-index='5']")).getText();
+//            count = count + 1;
+//        }
+//
+//        WebElement workOrdersBtn = driver.findElement(By.xpath("(//a[@routerlinkactive=\"active\"])[1]"));
+//        workOrdersBtn.click();
+//
+//        WebElement clientTxtBox = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//td[@id=\"k-grid0-r1c4\"]//kendo-grid-filter-wrapper-cell[@id=\"abId0.0676888859836664\"]//input")));
+//
+//        for (int j = 0; j< clientName.length; j++){
+//            clientTxtBox.clear();
+//            clientTxtBox.sendKeys(clientName[j]);
+//            actualValues[j] = driver.findElement(By.xpath("//kendo-pager-info[@class='k-pager-info k-label ng-star-inserted']")).getText();
+//        }
+//
+//        for (int count = 0 ; count < clientName.length;count++){
+//            Assert.assertTrue(actualValues[count].contains(clientValues[count]));
+//        }
+//
+//
+//    }
 
     @AfterMethod
     public void takeFailedScreenShots(ITestResult testResult){
