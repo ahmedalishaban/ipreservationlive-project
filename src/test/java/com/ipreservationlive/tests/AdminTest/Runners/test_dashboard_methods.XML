@@ -3,7 +3,7 @@
 <suite name="Annotations">
 <test name="Run Methods">
  <classes>
-     <class name="AdminTest.Dashboard.TC01_login">
+     <class name="com.ipreservationlive.tests.AdminTest.Dashboard.TC01_Login">
         <methods>
         </methods>
      </class>
