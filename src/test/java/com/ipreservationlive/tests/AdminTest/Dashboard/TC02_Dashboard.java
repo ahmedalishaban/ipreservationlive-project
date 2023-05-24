@@ -54,14 +54,22 @@ public class TC02_Dashboard extends BaseTest{
     @Test
     public void verifyClient() throws InterruptedException {
         loginPage.loginToWebsite();
-        // Assert from Client Availability
 
+        //Assert from Client Availability
         softAssert.assertTrue(dashboardPage.catchClientGrid().isDisplayed());
         softAssert.assertTrue(dashboardPage.catchClientChart().isDisplayed());
         softAssert.assertAll();
 
-        dashboardPage.getClientValues();
+        String[] clientValues = dashboardPage.getClientValues();
         dashboardPage.printClientValues();
+
+        dashboardPage.getWorkOrderPage();
+        String[] clientQueValues = workOrderPage.getClientQueValues();
+
+        for (int i = 0; i<clientQueValues.length;i++){
+            softAssert.assertTrue(clientQueValues[i].contains(clientValues[i]),"Values Not Match Each Other");
+        }
+        softAssert.assertAll();
     }
 
 }
