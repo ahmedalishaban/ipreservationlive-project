@@ -9,7 +9,7 @@ import java.time.Duration;
 
 public class DashboardPage extends BasePage{
 
-    private final By dashboardIcon = By.xpath("//span[@class=\"logo-lg\"]");
+    private final By dashboardIcon = By.xpath("//img[@src='assets/images/HomeLogoX.png']");
     private final By statusGrid = By.xpath("(//kendo-grid[@dir=\"ltr\"])[1]");
     private final By pieChartGrid = By.xpath("(//div[@class=\"k-chart-surface\"])[1]");
     private final By clientGrid = By.xpath("(//div[@class=\"card-box px-md-1\"])[2]");
@@ -25,11 +25,6 @@ public class DashboardPage extends BasePage{
     private final By assignedOrder = By.xpath("((//kendo-grid[@dir=\"ltr\"])[1]//td[@role=\"gridcell\"])[8]");
     private final By fieldCompleteOrder = By.xpath("((//kendo-grid[@dir=\"ltr\"])[1]//td[@role=\"gridcell\"])[12]");
 
-    // CheckBoxes Access to get the actual values
-    private final By unAssignedCheckBox = By.xpath("(//input[@type='checkbox'])[1]");
-    private final By assignedCheckBox = By.xpath("(//input[@type='checkbox'])[2]");
-    private final By fieldCompleteCheckBox = By.xpath("(//input[@type='checkbox'])[3]");
-    private final By officeApprovedCheckBox = By.xpath("(//input[@type='checkbox'])[4]");
 
     // get Que Values
     private final By queValue = By.xpath("//kendo-pager-info[contains(@class,'k-pager-info')]");
@@ -37,7 +32,8 @@ public class DashboardPage extends BasePage{
 
     // Page Methods
     public void clickDashboardIcon() throws InterruptedException {
-        find(dashboardIcon).click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(dashboardIcon)).click();
         Thread.sleep(1000);
     }
 
@@ -78,37 +74,7 @@ public class DashboardPage extends BasePage{
         return fieldCompleteOrderValue;
     }
 
-    public void checkUnAssignedOrders() throws InterruptedException {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(assignedCheckBox)).click();
-        Thread.sleep(4000);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(fieldCompleteCheckBox)).click();
-        Thread.sleep(4000);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(officeApprovedCheckBox)).click();
-        Thread.sleep(4000);
-    }
 
-    public void checkAssignedOrders() throws InterruptedException {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(unAssignedCheckBox)).click();
-        Thread.sleep(5000);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(assignedCheckBox)).click();
-        Thread.sleep(5000);
-    }
-
-    public void checkFieldCompleteOrders() throws InterruptedException {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(assignedCheckBox)).click();
-        Thread.sleep(3000);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(fieldCompleteCheckBox)).click();
-    }
-
-    public void checkOfficeApprovedOrders() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(unAssignedCheckBox)).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(assignedCheckBox)).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(fieldCompleteCheckBox)).click();
-    }
 
     public String getQueValue() throws InterruptedException {
         Thread.sleep(7000);

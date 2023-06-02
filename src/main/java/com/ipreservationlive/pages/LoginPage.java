@@ -49,7 +49,7 @@ public class LoginPage extends BasePage {
         setPassword("helloworld");
         clickLoginBtn();
         clickMessageBtn();
-        Thread.sleep(2000);
+        Thread.sleep(3000);
     }
 }
 

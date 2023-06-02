@@ -24,7 +24,7 @@ public class BaseTest {
     protected BasePage basePage;
     protected DashboardPage dashboardPage;
     protected WorkOrderPage workOrderPage;
-    protected SoftAssert softAssert = new SoftAssert();
+
 
     @BeforeClass
     public void setUp(){

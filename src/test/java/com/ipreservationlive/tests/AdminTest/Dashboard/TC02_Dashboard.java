@@ -5,22 +5,24 @@ import com.ipreservationlive.pages.DashboardPage;
 import com.ipreservationlive.pages.LoginPage;
 import org.testng.Assert;
 import org.testng.annotations.*;
+import org.testng.asserts.SoftAssert;
 
 
 public class TC02_Dashboard extends BaseTest{
 
-    @Test
+    @Test(priority = 1)
     public void verifyNavigateIcon() throws InterruptedException {
         loginPage.loginToWebsite();
-        basePage.navigateTo("https://testui.ipreservationlive.com/workorder");
+        dashboardPage.getWorkOrderPage();
         dashboardPage.clickDashboardIcon();
         Assert.assertEquals(dashboardPage.getDashboardUrl(),"https://testui.ipreservationlive.com/dashboard",
                     "Dashboard page not opened successfully");
     }
 
 //  Needs unique attributes to access pie Chart
-    @Test
+    @Test(priority = 2)
     public void verifyStatus() throws InterruptedException {
+        SoftAssert softAssert = new SoftAssert();
         loginPage.loginToWebsite();
         //Hard Assertions GRIDs
         Assert.assertTrue(dashboardPage.catchStatusGrid().isDisplayed(),"Status Grid Not Displayed");
@@ -32,13 +34,13 @@ public class TC02_Dashboard extends BaseTest{
         //Navigate to workOrder Page to get Que Values
         dashboardPage.getWorkOrderPage();
         //UnAssigned Status & Que
-        dashboardPage.checkUnAssignedOrders();
+        workOrderPage.checkUnAssignedOrders();
         String actualUnAssignedValue = dashboardPage.getQueValue();
         //Assigned Status & Que
-        dashboardPage.checkAssignedOrders();
+        workOrderPage.checkAssignedOrders();
         String actualAssignedValue = dashboardPage.getQueValue();
         //Field Complete Que
-        dashboardPage.checkFieldCompleteOrders();
+        workOrderPage.checkFieldCompleteOrders();
         String actualFieldCompleteValue = dashboardPage.getQueValue();
 
             //Soft Assertions for Que Values
@@ -51,14 +53,14 @@ public class TC02_Dashboard extends BaseTest{
     }
 
 
-    @Test
+    @Test(priority = 3)
     public void verifyClient() throws InterruptedException {
+        SoftAssert softAssert = new SoftAssert();
         loginPage.loginToWebsite();
 
         //Assert from Client Availability
         softAssert.assertTrue(dashboardPage.catchClientGrid().isDisplayed());
         softAssert.assertTrue(dashboardPage.catchClientChart().isDisplayed());
-        softAssert.assertAll();
 
         String[] clientValues = dashboardPage.getClientValues();
         dashboardPage.printClientValues();

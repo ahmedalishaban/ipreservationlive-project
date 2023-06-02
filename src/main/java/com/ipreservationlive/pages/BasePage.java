@@ -42,4 +42,11 @@ public class BasePage {
     public void clear(By locator){
         driver.findElement(locator).clear();
     }
+
+    public String getAlertMessage() throws InterruptedException {
+        Thread.sleep(1000);
+        String alertMessage = driver.switchTo().alert().getText();
+        driver.switchTo().alert().accept();
+        return alertMessage;
+    }
 }

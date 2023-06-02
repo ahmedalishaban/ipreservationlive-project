@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Dashboard Tests">
+<suite name="Admin Tests">
     <parameter name="loginURL" value="https://testui.ipreservationlive.com/admin/login"/>
     <parameter name="username" value="check123"/>
     <parameter name="password" value="helloworld"/>
@@ -11,26 +11,26 @@
 <!--        </classes>-->
 <!--    </test>-->
 
-    <test name=" Verify Dashboard">
-        <classes>
-            <class name="com.ipreservationlive.tests.AdminTest.Dashboard.TC02_Dashboard">
-                <methods>
+<!--    <test name=" Verify Dashboard">-->
+<!--        <classes>-->
+<!--            <class name="com.ipreservationlive.tests.AdminTest.Dashboard.TC02_Dashboard">-->
+<!--                <methods>-->
 <!--                    <include name="verifyNavigateIcon"/>-->
 <!--                    <include name="verifyStatus"/>-->
-                    <include name="verifyClient"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
-
-<!--    <test name="Verify Order's Client">-->
-<!--        <classes>-->
-<!--            <class name="com.ipreservationlive.tests.AdminTest.WorkOrders.TC03_WorkOrderQue">-->
-<!--                <methods>-->
-<!--                    <include name="verifyWorkOrder"/>-->
+<!--                    <include name="verifyClient"/>-->
 <!--                </methods>-->
 <!--            </class>-->
 <!--        </classes>-->
 <!--    </test>-->
+
+    <test name="Verify WorkOrder">
+        <classes>
+            <class name="com.ipreservationlive.tests.AdminTest.WorkOrders.TC03_WorkOrderQue">
+                <methods>
+                    <include name="verifyMessagePopUp"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
 
 </suite>
