@@ -52,7 +52,8 @@ public class WorkOrderPage extends BasePage {
     private final By saveCommentBtn = By.xpath("(//button[contains(text(),'Save')])[1]");
     private final By saveTaskBtn = By.xpath("(//i[contains(text(),'Save')])[1]");
     private final By selectTaskType = By.xpath("(//select[@id='TaskType'])[1]");
-    private final By enterQty = By.xpath("(//input[@placeholder=\"Enter Qty\"])[1]");
+    private final By enterQty = By.xpath("(//input[@placeholder='Enter Qty'])[1]");
+    private final By msTask = By.cssSelector("div[class='text-center'] span");
     private final By contractorPrice = By.xpath("(//input[@type='text'])[1]");
     private final By clientPrice = By.xpath("(//input[@type='text'])[3]");
     private final By continueSaveTaskBtn = By.xpath("//button[text()='Continue']");
@@ -196,11 +197,13 @@ public class WorkOrderPage extends BasePage {
 
     public boolean viewInstructionsOrders() throws InterruptedException {
         click(viewInstructionsBtn);
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         Thread.sleep(5000);
         System.out.println("#########Instructions Buttons#########\n");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@placeholder='Qty']"))).clear();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@placeholder='Qty']"))).sendKeys("20");
         System.out.println("Quantity of Instructions Added Successfully");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@placeholder='Price']"))).clear();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@placeholder='Price']"))).sendKeys("100");
         System.out.println("Price of Instructions Added Successfully");
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//button[@id=\"client_viewdetail_1\"])[6]"))).click();
@@ -209,7 +212,7 @@ public class WorkOrderPage extends BasePage {
         System.out.println("Continue Instructions Button Working Successfully");
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//button[@id=\"client_viewdetail_1\"])[5]"))).click();
         System.out.println("Add Instructions Button Working Successfully");
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//i[@class='fa fa-trash'])[4]"))).click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@style,'justify-content')]//span[3]//a"))).click();
         driver.switchTo().alert().accept();
         System.out.println("Delete Instructions Button Working Successfully\n");
         return wait.until(ExpectedConditions.visibilityOfElementLocated(instructionsView)).isDisplayed();
@@ -333,4 +336,498 @@ public class WorkOrderPage extends BasePage {
         }
         return find(By.xpath("//div[@class='modal-content']")).isDisplayed();
     }
+
+    public void clickMapPopUp(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[contains(@class,'d-flex')]//img[contains(@src,'address')])[1]"))).click();
+    }
+
+    public boolean MapPopUpVisibility(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        boolean mapPopUpStatus = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[contains(@class,'d-flex')]//img[contains(@src,'address')])[1]"))).isDisplayed();
+        System.out.println("Map Pop Up is Displayed? | " + mapPopUpStatus);
+        return mapPopUpStatus;
+    }
+
+    public void clickContractorDetails(){
+        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//img[contains(@src,'view_user')])[1]"))).click();
+    }
+    public boolean contractorDetailsVisibility(){
+        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(10));
+        boolean contractorDetailsStatus =  wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='popover-body']"))).isDisplayed();
+        String contractorDetailsText=  wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='popover-body']"))).getText();
+        System.out.println("Contractor Details (Name, Email, Phone) Are Displayed? | " + contractorDetailsStatus);
+        System.out.println("Contractor Details: " + contractorDetailsText);
+        return contractorDetailsStatus;
+    }
+    public String contractorDetails(){
+        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(10));
+        return wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='popover-body']"))).getText();
+    }
+
+    public void clickPhotoIcon(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//a[@title='view Records']//img[contains(@src,'images')])[1]")));
+    }
+
+    public void clickClientWorkOrderEyeIcon(){
+        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(25));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//a[contains(@href,'clientresultinstruction')]//i[contains(@class,'fa fa-eye')])[1]"))).click();
+    }
+
+    public String getInstructionsTap(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("contact-tab"))).getText();
+    }
+
+    public void setComment(String setComments){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//kendo-editor[@id='myFrame']//div//iframe"))).clear();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//kendo-editor[@id='myFrame']//div//iframe"))).sendKeys(setComments);
+    }
+    public void clickSaveCommentBtn(){
+        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//button[contains(text(),'Save')])[1]")));
+    }
+
+    public void clickAddTask(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[contains(text(),'Add Task')]"))).click();
+
+    }
+    public void selectCompletionTask(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        Select select = new Select(wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//select[@id='TaskType'])[1]"))));
+        select.selectByIndex(2);
+    }
+
+    public void setCompletionTaskValues() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(enterQty)).clear();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(enterQty)).sendKeys("50");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//input[@type='text'])[2]"))).clear();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//input[@type='text'])[2]"))).sendKeys("20");
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//input[@type='text'])[4]"))).clear();
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//input[@type='text'])[4]"))).sendKeys("50");
+    }
+
+    public void clickSaveTask(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//button[contains(text(),'Save')])[1]"))).click();
+        driver.switchTo().alert().accept();
+    }
+
+    public String getMsgTask(){
+        return getText(msTask);
+    }
+
+    public void selectBidTask(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        Select select = new Select(wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//select[@id='TaskType'])[1]"))));
+        select.selectByIndex(1);
+    }
+    public void setBidTaskValues(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//input[@placeholder='Enter Qty'])[2]"))).clear();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//input[@placeholder='Enter Qty'])[2]"))).sendKeys("50");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//input[@type='text'])[7]"))).clear();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//input[@type='text'])[7]"))).sendKeys("20");
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//input[@type='text'])[9]"))).clear();
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//input[@type='text'])[9]"))).sendKeys("50");
+
+    }
+
+    public void selectInspectionTask(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        Select select = new Select(wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//select[@id='TaskType'])[1]"))));
+        select.selectByIndex(3);
+    }
+
+    public void setInspectionTaskValues(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(enterQty)).clear();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(enterQty)).sendKeys("15");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//input[@type='text'])[2]"))).clear();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//input[@type='text'])[2]"))).sendKeys("50");
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//input[@type='text'])[4]"))).clear();
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//input[@type='text'])[4]"))).sendKeys("30");
+    }
+
+    public void clickAddInstructions(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[contains(text(),'Add Instructions')]"))).click();
+    }
+
+    public void addInstructionsValues() throws InterruptedException {
+        Thread.sleep(5000);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@placeholder='Qty']"))).clear();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@placeholder='Qty']"))).sendKeys("40");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@placeholder='Price']"))).clear();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@placeholder='Price']"))).sendKeys("200");
+    }
+
+    public void clickSaveInstructions(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//button[contains(text(),'Save')])[1]"))).click();
+        driver.switchTo().alert().accept();
+    }
+
+    public void clickAddDocument(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[contains(text(),'Attach Document')]"))).click();
+    }
+
+    public void addDocument(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='k-dropzone']//div[@role='button']//input[@name='files']"))).sendKeys("D:/Nezam/CTAI-Syllabus.pdf");
+    }
+
+    public String documentStatus(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//kendo-upload-status-total[contains(text(),'Done')]"))).getText();
+    }
+
+    public void clickAccessLog(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[contains(text(),'Access Log')]"))).click();
+    }
+
+    public String getDateText(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        String clientDate = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("((//tr[@role='row'])[3]//td[@class='ng-star-inserted'])[3]"))).getText();
+        System.out.println("Client Date: " + clientDate);
+        return clientDate;
+    }
+
+    public boolean userViewFileLogDisplayed(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("((//tr[@role='row'])[3]//td[@class='ng-star-inserted'])[4]"))).isDisplayed();
+    }
+
+    public void clickImportFilesLog(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement importFileElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[contains(text(),'Imported Files')]")));
+        importFileElement.click();
+    }
+    public boolean importFilesLogEnabled(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement importFileElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[contains(text(),'Imported Files')]")));
+        return importFileElement.isEnabled();
+    }
+    public void clickOfficeResults() throws InterruptedException {
+        Thread.sleep(6000);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(25));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@id='home-tab']"))).click();
+        Thread.sleep(6000);
+    }
+
+    public WebElement contentOfficeResults(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='content-page']")));
+    }
+
+    public void clickPropertyInfo() throws InterruptedException {
+        Thread.sleep(5000);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//ul[@id='myTab']//a[@id='pi-tab']"))).click();
+        Thread.sleep(6000);
+    }
+
+    public WebElement contentPropertyInfo(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class,'mt-3 tab-content')]")));
+    }
+
+    public WebElement clientDetails(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#home")));
+    }
+
+    public WebElement formsDisplayed(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='module-box']")));
+    }
+
+    public void clickBidInvoice() throws InterruptedException {
+        Thread.sleep(5000);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[contains(text(),'Bid')]"))).click();
+    }
+
+    public void verifyCreateBid(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        WebElement createBidContent = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@class='table-responsive']//tr[@type='Bid'])[2]")));
+        System.out.println("Bid Content Enabled To Create/Edit?"+ " | " + createBidContent.isEnabled());
+    }
+
+    public void verifyCreateCompletion(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//a[@id='inscinvoice-tab'])[2]"))).click();
+        WebElement createCompletionContent = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@class='table-responsive']//tr[@type='Inv'])[2]")));
+        System.out.println("Completion Content Enabled To Create/Edit?"+ " | " + createCompletionContent.isEnabled());
+    }
+
+    public void verifyAddDamage(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//a[@id='insdamage-tab'])[2]"))).click();
+        WebElement addDamageContent = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//table[@id='tech-companies-1'])[2]")));
+        System.out.println("Add Damage Content Enabled To Create/Edit?"+ " | " + addDamageContent.isEnabled());
+    }
+
+    public void addValuesToBid() throws InterruptedException {
+        Thread.sleep(5000);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//tr[@type='Bid']//input[@type='text'])[12]"))).clear();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//tr[@type='Bid']//input[@type='text'])[12]"))).sendKeys("30");
+        Select select = new Select(wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//tr[@type='Bid']//td[3])[2]//select"))));
+        select.selectByIndex(3);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//tr[@type='Bid']//td[4])[2]//input"))).clear();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//tr[@type='Bid']//td[4])[2]//input"))).sendKeys("200");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//tr[@type='Bid']//td[6])[2]//input"))).clear();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//tr[@type='Bid']//td[6])[2]//input"))).sendKeys("500");
+    }
+
+    public String clickSaveBid(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("((//div[@id='home2']//div[@class=\"row mt-1\"])//button[contains(text(),'Save')])[2]"))).click();
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(msTask)).getText();
+    }
+
+
+    public void addValuesToCompletion() throws InterruptedException {
+        Thread.sleep(5000);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("((//div[@id='inscinvoice'])[2]//input)[1]"))).clear();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("((//div[@id='inscinvoice'])[2]//input)[1]"))).sendKeys("40");
+        Select select = new Select(wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@id='inscinvoice'])[2]//tr[@type='Inv']//select"))));
+        select.selectByIndex(4);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("((//div[@id='inscinvoice'])[2]//tr[@type='Inv']//input)[4]"))).clear();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("((//div[@id='inscinvoice'])[2]//tr[@type='Inv']//input)[4]"))).sendKeys("600");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("((//div[@id='inscinvoice'])[2]//tr[@type='Inv']//input)[8]"))).clear();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("((//div[@id='inscinvoice'])[2]//tr[@type='Inv']//input)[8]"))).sendKeys("100");
+    }
+
+    public String clickSaveCompletion(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//button[contains(text(),'Save')])[8]"))).click();
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(msTask)).getText();
+    }
+
+    public void addValuesToDamage() throws InterruptedException {
+        Thread.sleep(5000);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        Select select = new Select(wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@id='myinvContent']//div[@id='insdamage']//select)[2]"))));
+        select.selectByIndex(2);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@id='myinvContent']//div[@id='insdamage']//input[@type='text'])[7]"))).clear();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@id='myinvContent']//div[@id='insdamage']//input[@type='text'])[7]"))).sendKeys("Hello World");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@id='myinvContent']//div[@id='insdamage']//input[@type='text'])[8]"))).clear();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@id='myinvContent']//div[@id='insdamage']//input[@type='text'])[8]"))).sendKeys("5");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@id='myinvContent']//div[@id='insdamage']//input[@type='text'])[9]"))).clear();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@id='myinvContent']//div[@id='insdamage']//input[@type='text'])[9]"))).sendKeys("100");
+    }
+
+    public String clickSaveDamage(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//button[contains(text(),'Save')])[9]"))).click();
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(msTask)).getText();
+    }
+
+
+    public void clickAddAppliance(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='modal-content']//a[@id='Appliance-tab']"))).click();
+    }
+
+    public void clickOnApplianceStatus(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@class='modal-content']//div[@id='myinvContent']//div[@id='Appliance']//input[@type='button'])[1]"))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@class='modal-content']//div[@id='myinvContent']//div[@id='Appliance']//input[@type='button'])[2]"))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@class='modal-content']//div[@id='myinvContent']//div[@id='Appliance']//input[@type='button'])[3]"))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@class='modal-content']//div[@id='myinvContent']//div[@id='Appliance']//input[@type='button'])[4]"))).click();
+    }
+
+    public String clickSaveAppliance(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='modal-content']//div[@id='myinvContent']//div[@id='Appliance']//button[contains(text(),'Save')]"))).click();
+        String applianceMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(msTask)).getText();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='text-center']//button[contains(text(),'Close')]"))).click();
+        return applianceMessage;
+    }
+
+    public void clickOfficeDocument(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='modal-content']//a[@id='OfficeDocument-tab']"))).click();
+    }
+
+    public void clickAddOfficeDocumentBtn(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='modal-content']//div[@id='OfficeDocument']//button[contains(text(),'Add')]"))).click();
+    }
+
+    public void addOfficeDocument(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@role='document']//div[@class='modal-content']//div[@class='modal-body']//kendo-upload[@dir='ltr']//div[@class='k-dropzone']//div[@role='button']//input[@name='files']"))).sendKeys("D:/Nezam/CTAI-Syllabus.pdf");
+    }
+
+    public String officeDocumentStatus(){
+        return documentStatus();
+    }
+
+    public void clickFieldResults() throws InterruptedException {
+        Thread.sleep(5000);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//ul[@id='myTab']//a[contains(text(),'Field Results')]"))).click();
+        Thread.sleep(5000);
+    }
+
+    public void clickPropertyInformation(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        System.out.println("Key Property Info Enabled" + "|"  +   wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//ul[@id='myreco']//a[@id='KeyPropertyInfo-tab']"))).isEnabled());
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//ul[@id='myreco']//a[@id='PropertySettings-tab']"))).click();
+        System.out.println("Property Settings Enabled?" +  "|"  +   wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//ul[@id='myreco']//a[@id='PropertySettings-tab']"))).isEnabled());
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//ul[@id='myreco']//a[@id='PropertyTeam-tab']"))).click();
+        System.out.println("Property Team Enabled?" + "| " +   wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//ul[@id=\"myreco\"]//a[@id='PropertyTeam-tab']"))).isEnabled());
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//ul[@id='myreco']//a[@id='LoanSettings-tab']"))).click();
+        System.out.println("Loan Settings Enabled?" + " | " +  wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//ul[@id='myreco']//a[@id='LoanSettings-tab']"))).isEnabled());
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//ul[@id='myreco']//a[@id='ServiceDates-tab']"))).click();
+        System.out.println("Service Dates Enabled?" + " | " + wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//ul[@id='myreco']//a[@id='ServiceDates-tab']"))).isEnabled());
+    }
+
+    public boolean clickFieldResultsForm() throws InterruptedException {
+        Thread.sleep(6000);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='module-box']//button[contains(text(),'Forms')]"))).click();
+        System.out.println("PCR Displayed?" + wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='modal-content']//h4"))).isDisplayed());
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='modal-content']//span[@aria-haspopup='listbox']"))).isEnabled();
+    }
+
+    public void clickInvoiceTap() throws InterruptedException {
+        Thread.sleep(5000);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//ul[@id='myTab']//a[@id='invoice-tab']"))).click();
+    }
+
+    public void addValuesToScoreCard() throws InterruptedException {
+        Thread.sleep(6000);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        WebElement radioBtn1 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//div[@id='myTabContent']//div[@class='module-box']//input[@id='Prefered-0'])[1]")));
+        radioBtn1.click();
+        System.out.println("Can Edit Picture Quality Values?" + " | " +  radioBtn1.isEnabled());
+
+        WebElement radioBtn2 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//div[@id='myTabContent']//div[@class='module-box']//input[@id='Prefered-1'])[2]")));
+        radioBtn2.click();
+        System.out.println("Can Edit Followed Instructions Values?" + " | " +  radioBtn2.isEnabled());
+
+        WebElement radioBtn3 =  wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//div[@id='myTabContent']//div[@class='module-box']//input[@id='Prefered-2'])[3]")));
+        radioBtn3.click();
+        System.out.println("Can Edit Work Quality Values?" + " | " +  radioBtn3.isEnabled());
+    }
+
+    public String clickSaveScoreCardValues() throws InterruptedException {
+        Thread.sleep(6000);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//table[@class='scorecard-table']//button[contains(text(),'Save')]"))).click();
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(msTask)).getText();
+    }
+
+    public void clickAddViolation(){
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='modal-content']//a[@id='insviolation-tab']"))).click();
+    }
+
+    public void addValuesToViolation() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+
+        WebElement violationNameInput = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='modal-content']//div[@id='myinvContent']//div[@id='insviolation']//input[@placeholder='Violation Name']")));
+        violationNameInput.sendKeys("Test1");
+
+        WebElement violationIdInput = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='modal-content']//div[@id='myinvContent']//div[@id='insviolation']//input[@placeholder='Violation Id']")));
+        violationIdInput.sendKeys("52136");
+
+        WebElement fineAmountInput = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='modal-content']//div[@id='myinvContent']//div[@id='insviolation']//input[@placeholder='Fine Amount']")));
+        fineAmountInput.clear();
+        fineAmountInput.sendKeys("50");
+
+        WebElement contactInput = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='modal-content']//div[@id='myinvContent']//div[@id='insviolation']//input[@placeholder='Contact']")));
+        contactInput.sendKeys("AhmedAli@gmail.com");
+    }
+
+    public void clickSaveViolation(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='modal-content']//div[@id='insviolation']//button[contains(text(),'Save')]"))).click();
+    }
+
+    public String violationStatus(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(msTask)).getText();
+    }
+
+    public void clickAddHazard(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='modal-content']//a[@id='inshazard-tab']"))).click();
+    }
+
+    public void addHazardValues(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement hazardName = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='modal-content']//div[@id='myinvContent']//div[@id='inshazard']//input[@placeholder='Hazard Name']")));
+        hazardName.clear();
+        hazardName.sendKeys("Ahmed Ali");
+        WebElement hazardDescription = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='modal-content']//div[@id='myinvContent']//div[@id='inshazard']//textarea[contains(@placeholder,'Description')]")));
+        hazardDescription.clear();
+        hazardDescription.sendKeys("Ahmed Ali & Micheal Working Together");
+    }
+
+    public void clickSaveHazard(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='modal-content']//div[@id='inshazard']//button[contains(text(),'Save')]"))).click();
+    }
+
+    public String hazardStatus(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(msTask)).getText();
+    }
+
+    public void clickPropertyHistory(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'Property History')]"))).click();
+    }
+
+    public void clickBidHistory(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='modal-content']//ul[@id='myinvpro']//a[contains(text(),'Bid')]"))).click();
+        WebElement bidHistoryContent = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='modal-content']//div[@id='invbidhistory']")));
+        System.out.println("Bid History Content Displayed? " + " | " + bidHistoryContent.isDisplayed());
+    }
+
+    public void clickCompletionHistory(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='modal-content']//ul[@id='myinvpro']//a[contains(text(),'Completion')]"))).click();
+        WebElement completionHistoryContent = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='modal-content']//div[@id='invinvoicehistory']")));
+        System.out.println("Completion History Content Displayed? " + " | " + completionHistoryContent.isDisplayed());
+    }
+
+    public void clickDamageHistory(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='modal-content']//ul[@id='myinvpro']//a[contains(text(),'Damage')]"))).click();
+        WebElement damageHistoryContent = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='modal-content']//div[@id='invdamagehistory']")));
+        System.out.println("Damage History Content Displayed? " + " | " + damageHistoryContent.isDisplayed());
+    }
+
+    public void clickContractorInvoiceHistory(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='modal-content']//ul[@id='myinvpro']//a[contains(text(),'Contractor')]"))).click();
+        WebElement contractorHistoryContent = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='modal-content']//div[@id='contractorinvoicehistory']")));
+        System.out.println("Contractor Invoice History Content Displayed? " + " | " + contractorHistoryContent.isDisplayed());
+    }
+
+    public void clickClientInvoiceHistory(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='modal-content']//a[contains(text(),'Client Invoice')]"))).click();
+        WebElement contractorHistoryContent = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='modal-content']//div[@id='clientinvoicehistory']")));
+        System.out.println("Contractor Invoice History Content Displayed? " + " | " + contractorHistoryContent.isDisplayed());
+    }
+
 }

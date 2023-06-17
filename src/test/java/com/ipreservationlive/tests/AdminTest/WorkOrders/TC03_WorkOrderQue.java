@@ -193,6 +193,32 @@ public class TC03_WorkOrderQue extends BaseTest {
             Assert.assertTrue(workOrderPage.clickMessagePopUp());
     }
 
+    @Test(priority = 13)
+            public void verifyMapPopUp() throws InterruptedException {
+            //16. Map popup works
+            loginPage.loginToWebsite();
+            dashboardPage.getWorkOrderPage();
+            workOrderPage.clickMapPopUp();
+            Assert.assertTrue(workOrderPage.MapPopUpVisibility());
+    }
 
+    @Test(priority = 14)
+            public void verifyContractorDetailsPopUp() throws InterruptedException {
+            //17. Contractor details popup works
+            loginPage.loginToWebsite();
+            dashboardPage.getWorkOrderPage();
+            workOrderPage.clickContractorDetails();
+            Assert.assertTrue(workOrderPage.contractorDetailsVisibility());
+            Assert.assertTrue(workOrderPage.contractorDetails().contains("Name") && workOrderPage.contractorDetails().contains("Email") && workOrderPage.contractorDetails().contains("Contact"));
+    }
 
+    @Test(priority = 15)
+            public void verifyPhotoIcon() throws InterruptedException {
+            //18. Photo count Icon
+            SoftAssert softAssert = new SoftAssert();
+            loginPage.loginToWebsite();
+            dashboardPage.getWorkOrderPage();
+            workOrderPage.clickPhotoIcon();
+            softAssert.assertTrue(workOrderPage.getCurrentUrl().contains("photo"));
+    }
 }

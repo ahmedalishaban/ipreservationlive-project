@@ -23,11 +23,21 @@
 <!--        </classes>-->
 <!--    </test>-->
 
-    <test name="Verify WorkOrder">
+<!--    <test name="Verify WorkOrder">-->
+<!--        <classes>-->
+<!--            <class name="com.ipreservationlive.tests.AdminTest.WorkOrders.TC04_ViewWorkOrder">-->
+<!--                <methods>-->
+<!--                    <include name="verifyEditComment"/>-->
+<!--                </methods>-->
+<!--            </class>-->
+<!--        </classes>-->
+<!--    </test>-->
+
+    <test name="Verify View Work Order">
         <classes>
-            <class name="com.ipreservationlive.tests.AdminTest.WorkOrders.TC03_WorkOrderQue">
+            <class name="com.ipreservationlive.tests.AdminTest.WorkOrders.TC06_FieldResults">
                 <methods>
-                    <include name="verifyMessagePopUp"/>
+                    <include name="verifyPropertyHistory"/>
                 </methods>
             </class>
         </classes>
